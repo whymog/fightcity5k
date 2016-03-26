@@ -15,18 +15,19 @@ public class PlayerMovement : MonoBehaviour {
 		playerVelocity = new Vector2 (0, 0);
 		if (Input.GetKeyDown ("space")) {
 //			print ("space key was pressed");
-			playerVelocity.y = 20.0f;
+			playerVelocity.y = 4.0f;
+			GetComponent<Rigidbody2D> ().velocity += new Vector2(0, playerVelocity.y);
 		}
 
 		if (Input.GetKey ("left")) {
 //			print ("left arrow was pressed");
-			playerVelocity.x = -2.0f;
+			playerVelocity.x = -0.05f;
 		} else if (Input.GetKey ("right")) {
 //			print ("right arrow was pressed");
-			playerVelocity.x = 2.0f;
+			playerVelocity.x = 0.05f;
 		}
 
-		GetComponent<Rigidbody2D> ().velocity = playerVelocity;
-		print (GetComponent<Rigidbody2D> ().velocity);
+		transform.position += new Vector3 (playerVelocity.x , 0, 0);
+
 	}
 }
