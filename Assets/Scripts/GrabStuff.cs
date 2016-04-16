@@ -13,13 +13,13 @@ public class GrabStuff : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown ("down")) {
+		if (Input.GetKeyDown ("x")) {
 			if (objToGrab != null && !grabbed) {
-				print ("GRABBED " + objToGrab);
+//				print ("GRABBED " + objToGrab);
 				grabbed = true;
 				objToGrab.GetComponent<BoxCollider2D> ().isTrigger = true;
 			} else if (grabbed) {
-				print ("DROPPING " + objToGrab);
+//				print ("DROPPING " + objToGrab);
 				objToGrab.GetComponent<BoxCollider2D> ().isTrigger = false;
 				grabbed = false;
 			} else {
@@ -33,14 +33,14 @@ public class GrabStuff : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D coll) {
 		if (coll.gameObject.tag == "Grabbable" && !grabbed) {
-			print("grabbable object within reach");
+//			print("grabbable object within reach");
 			objToGrab = coll.gameObject;
 		}
 	}
 
 	void OnTriggerExit2D(Collider2D coll) {
 		if (coll.gameObject.tag == "Grabbable" && !grabbed) {
-			print ("grabbable object lost");
+//			print ("grabbable object lost");
 			objToGrab = null;
 		}
 	}

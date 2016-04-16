@@ -4,19 +4,26 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour {
 
 	Vector2 playerVelocity;
+	GameObject jumper;
+	Jumping jumpScript;
 
 	// Use this for initialization
 	void Start () {
+		jumper = GameObject.Find("Jumper");
+		jumpScript = jumper.GetComponent<Jumping>();
+
 		playerVelocity = new Vector2 (0, 0);
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		playerVelocity = new Vector2 (0, 0);
-		if (Input.GetKeyDown ("space")) {
-//			print ("space key was pressed");
+		if (Input.GetKeyDown ("z") && jumpScript.onGround) {
+//			print ("jump key was pressed");
 			playerVelocity.y = 4.0f;
 			GetComponent<Rigidbody2D> ().velocity += new Vector2(0, playerVelocity.y);
+			jumpScript.onGround = false;
+			print ("Jumping");
 		}
 
 		if (Input.GetKey ("left")) {
