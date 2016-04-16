@@ -3,14 +3,16 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
 
-	Vector2 playerVelocity;
+	public Vector2 playerVelocity;
 	GameObject jumper;
 	Jumping jumpScript;
+	bool jumpInProgress;
 
 	// Use this for initialization
 	void Start () {
 		jumper = GameObject.Find("Jumper");
 		jumpScript = jumper.GetComponent<Jumping>();
+		jumpInProgress = false;
 
 		playerVelocity = new Vector2 (0, 0);
 	}
@@ -18,11 +20,12 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		playerVelocity = new Vector2 (0, 0);
-		if (Input.GetKeyDown ("z") && jumpScript.onGround) {
+		if (Input.GetKeyDown ("z") && jumpScript.onGround && !jumpInProgress) {
 //			print ("jump key was pressed");
 			playerVelocity.y = 4.0f;
 			GetComponent<Rigidbody2D> ().velocity += new Vector2(0, playerVelocity.y);
-			jumpScript.onGround = false;
+			jumpInProgress = true;
+			StartCoroutine(BeginJump(0.1F));
 			print ("Jumping");
 		}
 
@@ -36,5 +39,12 @@ public class PlayerMovement : MonoBehaviour {
 
 		transform.position += new Vector3 (playerVelocity.x , 0, 0);
 
+	}
+
+	IEnumerator BeginJump(float waitTime) {
+		yield return new WaitForSeconds(waitTime);
+		jumpScript.onGround = false;
+		jumpInProgress = false;
+		print("Jump succeeded " + Time.time);
 	}
 }

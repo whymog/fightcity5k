@@ -12,7 +12,7 @@ public class Jumping : MonoBehaviour {
 
 	// First, let's see if Chorizo is on the ground
 	void OnTriggerEnter2D(Collider2D coll) {
-		if (coll.gameObject.tag == "Ground" || coll.gameObject.tag == "Grabbable") {
+		if (coll.gameObject.tag == "Ground") {
 			onGround = true;
 			print ("On the ground.");
 		}
